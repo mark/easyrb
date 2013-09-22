@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+$:.unshift 'lib'
+
+require 'easyrb'
+require 'irb'
+require 'irb/completion'
+
+IRB.start
