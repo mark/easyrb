@@ -1,4 +1,4 @@
-### ERB
+### EasyRB
 
 ERB is a pretty cool technology, and a great example of the power and versitility of Ruby.
 
@@ -6,21 +6,21 @@ But... it can be a pain to use.  Especially once you're used to Rails, which pro
 
 Enter... EasyRB.
 
-#### EasyRB
+#### Usage
 
 EasyRB provides 3 convenience method that make it easy to render ERB templates:
 
-- `String#erb(options = {})` turns the string it is called on into an ERB template, and renders it with the provided options.
+- `String#erb(options = {})` treats the string it is called on as an ERB template, and renders it with the provided options.
 
-- `File::erb(filename, options = {})` turns the contents of the file with the given filename, and renders it with the provided options.
+- `File::erb(filename, options = {})` treats the contents of the file with the given filename as an ERB template, and renders it with the provided options.
 
-- `File#erb(options = {})` turns the contents of the file into an ERB template, and renders it with the provided options.
+- `File#erb(options = {})` treats the contents of the file as an ERB template, and renders it with the provided options.
 
 In addition, you can manually create and run an ERB template using:
 
-- `EasyRB::Runner.new(erb_template).run(options = {})`
+- `EasyRB::Runner.new(erb_template_string).run(options = {})`
 
-Each of these methods may take any of the same 3 options:
+Each of these methods may take any or all of the same 3 options:
 
 - `:context` this is the object that is "self" for evaluating the template.  If none is provided, then a new Object is used.
 
@@ -32,11 +32,33 @@ Note: if the same method/key is provided in all three of the options, the priori
 
 #### Examples
 
+Using context:
+```ruby
+Project = Struct.new(:name, :url)
+"Started work on #{ name } (at #{ url })".erb(context: Project.new("EasyRB", "http://github.com/mark/easyrb"))
+# => "Started work on EasyRB (at http://github.com/mark/easyrb)"
+```
+
+Using helpers:
+```ruby
+module FooModule
+  def meta_foo
+    "foo"
+  end
+end
+
+module BarModule
+  def meta_bar
+    "bar"
+  end
+end
+
+"The first metasyntactic variables are #{ meta_foo } and #{ meta_bar }".erb(helpers: [FooModule, BarModule])
+# => "The first metasyntactic variables are foo and bar"
+```
+
+Using locals:
 ```ruby
 "Hello, #{ first_name } #{ last_name }".erb(locals: { first_name: "Mark", last_name: "Josef" })
 # => "Hello, Mark Josef"
 ```
-
-```ruby
-
-
