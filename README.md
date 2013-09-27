@@ -1,4 +1,4 @@
-### EasyRB
+### EasyRB [![Gem Version](https://badge.fury.io/rb/easyrb.png)](http://badge.fury.io/rb/easyrb)
 
 ERB is a pretty cool technology, and a great example of the power and versitility of Ruby.
 
